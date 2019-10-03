@@ -26,9 +26,6 @@
                         </goals>
 
                         <configuration>
-                            <environmentVariables>
-                              <PUBLIC_URL>./</PUBLIC_URL>
-                            </environmentVariables>
                             <nodeVersion>v8.12.0</nodeVersion>
                             <yarnVersion>v1.13.0</yarnVersion>
                         </configuration>
