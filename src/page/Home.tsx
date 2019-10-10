@@ -70,13 +70,7 @@ class Home extends React.Component<{ history: any }> {
                     </Row>
                     <Row>
                         <Col lg="7" id="home-function-description">
-                            Genome Nexus will integrate information from a
-                            variety of existing resources, including databases
-                            that convert DNA changes to protein changes, predict
-                            the functional effects of protein mutations, and
-                            contain information about mutation frequencies, gene
-                            function, variant effects, and clinical
-                            actionability.
+                            test
                         </Col>
                     </Row>
                     <Row className="justify-content-md-center">
