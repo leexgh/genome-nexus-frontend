@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, HashRouter } from 'react-router-dom';
 
 import Footer from '../component/Footer';
 import Header from '../component/Header';
@@ -22,7 +22,7 @@ class Main extends React.Component<{}> {
         );
 
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <div className="Main">
                     <Header />
                     <div
@@ -57,7 +57,7 @@ class Main extends React.Component<{}> {
                     </div>
                     <Footer />
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }
