@@ -37,16 +37,31 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     @computed
-    private get annotation() {
-        return this.props.store.annotation.result;
+    private get annotationSummary() {
+        console.log("annotation.result")
+        console.log(this.props.store.annotation.result)
+        debugger;
+        if (this.props.store.annotation.result) {
+            return this.props.store.annotation.result.annotation_summary;
+        }
+        else {
+            return undefined;
+        }
+        // return this.props.store.annotation.result ? this.props.store.annotation.result.annotation_summary : undefined;
     }
 
     @computed
     private get myVariantInfo() {
-        return this.props.store.myVariantInfo.result;
+        return this.props.store.annotation.result ? this.props.store.annotation.result.my_variant_info.annotation: undefined;
+    }
+
+    @computed
+    private get genomeNexus() {
+        return this.props.store.annotation.result;
     }
 
     protected get isLoading() {
+        debugger;
         return this.props.store.annotation.isPending;
     }
 
@@ -59,7 +74,9 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     private getMutationMapper() {
-        let mutation = this.variantToMutation(this.annotation);
+        debugger;
+        console.log(this.annotationSummary)
+        let mutation = this.variantToMutation(this.annotationSummary);
         if (mutation[0].gene && mutation[0].gene.hugoGeneSymbol.length !== 0) {
             return (
                 <GenomeNexusMutationMapper
@@ -77,11 +94,11 @@ class Variant extends React.Component<IVariantProps> {
                         [TrackName.PTM]: 'visible',
                     }}
                     hugoSymbol={
-                        getTranscriptConsequenceSummary(this.annotation)
+                        getTranscriptConsequenceSummary(this.annotationSummary)
                             .hugoGeneSymbol
                     }
                     entrezGeneId={Number(
-                        getTranscriptConsequenceSummary(this.annotation)
+                        getTranscriptConsequenceSummary(this.annotationSummary)
                             .entrezGeneId
                     )}
                     showPlotLegendToggle={false}
@@ -289,13 +306,13 @@ class Variant extends React.Component<IVariantProps> {
                         </Row>
                         <Row>
                             <Col>
-                                {<BasicInfo annotation={this.annotation} />}
+                                {<BasicInfo annotation={this.annotationSummary} />}
                             </Col>
                         </Row>
                         <Row>
                             <Col>
                                 <TranscriptSummaryTable
-                                    annotation={this.annotation}
+                                    annotation={this.annotationSummary}
                                 />
                             </Col>
                         </Row>
@@ -308,7 +325,8 @@ class Variant extends React.Component<IVariantProps> {
                             <Col>
                                 <FunctionalGroups
                                     myVariantInfo={this.myVariantInfo}
-                                    annotationInternal={this.annotation}
+                                    annotationInternal={this.annotationSummary}
+                                    genomeNexusCache={this.genomeNexus}
                                 />
                             </Col>
                         </Row>

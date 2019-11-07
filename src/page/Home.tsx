@@ -8,7 +8,7 @@ import './Home.css';
 import QueryExamples from '../component/QueryExamples';
 import logo from '../image/logo/home_page_logo.png';
 import { isVariantValid } from '../util/variantValidator';
-import client from './genomeNexusClientInstance';
+import { genomeNexusClient } from './genomeNexusClientInstance';
 import ValidatorNotification, {
     ErrorType,
 } from '../component/ValidatorNotification';
@@ -124,8 +124,8 @@ class Home extends React.Component<{ history: any }> {
     async onSearch() {
         if (isVariantValid(`${this.inputText}`).isValid) {
             // check if the variant has response
-            const response = await client
-                .fetchVariantAnnotationSummaryGET({ variant: this.inputText! })
+            const response = await genomeNexusClient
+                .fetchVariantAnnotationGET({ variant: this.inputText! })
                 .catch(ex => {
                     this.alertType = ErrorType.NO_RESULT;
                 });

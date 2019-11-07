@@ -8,7 +8,7 @@ import './SideBar.css';
 import { VariantStore } from '../../page/VariantStore';
 import { isVariantValid } from '../../util/variantValidator';
 import { observer } from 'mobx-react';
-import client from '../../page/genomeNexusClientInstance';
+import { genomeNexusClient } from '../../page/genomeNexusClientInstance';
 import ValidatorNotification, { ErrorType } from '../ValidatorNotification';
 
 type PathParamsType = {
@@ -95,8 +95,8 @@ class SideBar extends React.Component<SideBarProps> {
     @action.bound
     async onSearch() {
         if (isVariantValid(`${this.inputText}`).isValid) {
-            const response = await client
-                .fetchVariantAnnotationSummaryGET({ variant: this.inputText! })
+            const response = await genomeNexusClient
+                .fetchVariantAnnotationGET({ variant: this.inputText! })
                 .catch(ex => {
                     this.alertType = ErrorType.NO_RESULT;
                 });

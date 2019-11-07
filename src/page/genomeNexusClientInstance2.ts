@@ -5,4 +5,6 @@ export const genomeNexusApiRoot =
     !window.location.host.includes('netlify')
         ? `//${window.location.host}`
         : 'https://www.genomenexus.org';
-export const genomeNexusClient = new GenomeNexusAPI(genomeNexusApiRoot);
+const genomeNexusClient = new GenomeNexusAPI(genomeNexusApiRoot);
+
+export default genomeNexusClient;

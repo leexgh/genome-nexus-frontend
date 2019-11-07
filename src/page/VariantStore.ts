@@ -3,8 +3,10 @@ import {
     VariantAnnotationSummary,
     remoteData,
     MyVariantInfo,
+    VariantAnnotation,
 } from 'cbioportal-frontend-commons';
-import client from './genomeNexusClientInstance';
+import { genomeNexusClient } from './genomeNexusClientInstance';
+
 import MobxPromise from 'mobxpromise';
 
 export interface VariantStoreConfig {
@@ -36,10 +38,11 @@ export class VariantStore {
     @observable public selectedResources: string[] = this.allResources;
     @observable public variant: string = '';
 
-    readonly annotation = remoteData<VariantAnnotationSummary>({
+    readonly annotation = remoteData<VariantAnnotation>({
         invoke: async () => {
-            return await client.fetchVariantAnnotationSummaryGET({
+            return await genomeNexusClient.fetchVariantAnnotationGET({
                 variant: this.variant,
+                fields: ["annotation_summary","my_variant_info"],
             });
         },
         onError: (err: Error) => {
@@ -47,14 +50,25 @@ export class VariantStore {
         },
     });
 
-    readonly myVariantInfo: MobxPromise<MyVariantInfo> = remoteData({
-        invoke: async () => {
-            return await client.fetchMyVariantInfoAnnotationGET({
-                variant: this.variant,
-            });
-        },
-        onError: () => {
-            // fail silently, leave the error handling responsibility to the data consumer
-        },
-    });
+    // readonly myVariantInfo: MobxPromise<MyVariantInfo> = remoteData({
+    //     invoke: async () => {
+    //         return await genomeNexusClientInternal.fetchMyVariantInfoAnnotationGET({
+    //             variant: this.variant,
+    //         });
+    //     },
+    //     onError: () => {
+    //         // fail silently, leave the error handling responsibility to the data consumer
+    //     },
+    // });
+
+//     readonly variantAnnotation = remoteData<VariantAnnotation>({
+//         invoke: async () => {
+//             return await genomeNexusClient.fetchVariantAnnotationByIdGET({
+//                 variantId: this.variant,
+//             });
+//         },
+//         onError: () => {
+//             // fail silently, leave the error handling responsibility to the data consumer
+//         },
+//     });
 }
