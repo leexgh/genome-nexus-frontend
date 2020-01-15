@@ -396,7 +396,7 @@ class Variant extends React.Component<IVariantProps> {
                 </div>
                 <div className={'page-section'}>
                     <div className={'row'}>
-                        <Col>
+                        <Col className={'small'}>
                             <FunctionalGroups
                                 myVariantInfo={this.myVariantInfo}
                                 annotationInternal={this.annotationSummary}
